@@ -63,16 +63,32 @@ $machine = new MachineACafe("Senseo");
             <span>🧂</span>
         </div>
 
-        <!-- ZONE TASSE (déjà placée !) -->
-        <div class="zone-tasse">
-            <div class="buse"></div>
-            <div class="goutte" id="goutte"></div>
-            <div class="tasse">
-                <div class="tasse-contenu" id="tasse-contenu"></div>
-                <div class="tasse-anse"></div>
-            </div>
-        </div>
+<!-- ZONE TASSE AVEC SUPPORT -->
+<div class="zone-tasse">
+    <div class="buse"></div>
+    <div class="goutte" id="goutte"></div>
+    
+    <!-- Support + tasse -->
+    <div class="support-tasse">
 
+        <!-- La tasse -->
+        <div class="tasse">
+            <div class="tasse-contenu" id="tasse-contenu"></div>
+            <div class="fumee" id="fumee">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="tasse-anse"></div>
+        </div>
+        
+        <!-- Grille d'égouttoir -->
+        <div class="grille-support"></div>
+        <div class="pied-support"></div>
+    </div>
+</div>
         <!-- BOUTONS PRINCIPAUX -->
         <div class="boutons-principaux">
             <button class="btn-power" onclick="machine.onOff()">

@@ -1,193 +1,203 @@
 class MachineACafe {
+  constructor(marque = "Senseo") {
+    this.marque = marque;
+    this.cafe = false; // Dosette présente ?
+    this.enFonction = false; // Allumée ?
+    this.sucre = 0;
+    this.solde = 0;
+    this.prixCafe = 1.5;
 
-    constructor(marque = "Senseo") {
-        this.marque = marque;
-        this.cafe = false;         // Dosette présente ?
-        this.enFonction = false;   // Allumée ?
-        this.sucre = 0;
-        this.solde = 0;
-        this.prixCafe = 1.50;
+    this.afficherMessage("☕ Prêt à servir");
+    this.mettreAJourAffichage();
+  }
 
-        this.afficherMessage("☕ Prêt à servir");
-        this.mettreAJourAffichage();
+  // ============ MÉTIER ============
+
+  onOff() {
+    this.enFonction = !this.enFonction;
+    const message = this.enFonction
+      ? `✅ Machine ${this.marque} allumée`
+      : `⏻ Machine ${this.marque} éteinte`;
+
+    this.afficherMessage(message);
+    this.mettreAJourAffichage();
+    return message;
+  }
+
+  mettreUneDosette() {
+    if (this.cafe) {
+      const msg = "⚠️ Une dosette est déjà présente";
+      this.afficherMessage(msg);
+      return msg;
     }
 
-    // ============ MÉTIER ============
+    this.cafe = true;
+    const msg = "✅ Dosette insérée";
+    this.afficherMessage(msg);
+    this.mettreAJourAffichage();
+    return msg;
+  }
 
-    onOff() {
-        this.enFonction = !this.enFonction;
-        const message = this.enFonction
-            ? `✅ Machine ${this.marque} allumée`
-            : `⏻ Machine ${this.marque} éteinte`;
-
-        this.afficherMessage(message);
-        this.mettreAJourAffichage();
-        return message;
+  ajouterSucre(nb) {
+    if (nb > 0) {
+      this.sucre += nb;
+      const msg = `🧂 +${nb} sucre(s)`;
+      this.afficherMessage(msg);
+    } else if (nb < 0 && this.sucre > 0) {
+      // On ne peut pas retirer plus que ce qu'on a
+      const retrait = Math.min(Math.abs(nb), this.sucre);
+      this.sucre -= retrait;
+      const msg = `🧂 -${retrait} sucre(s)`;
+      this.afficherMessage(msg);
+    } else if (nb < 0 && this.sucre <= 0) {
+      this.afficherMessage("⚠️ Aucun sucre à retirer");
     }
 
-    mettreUneDosette() {
-        if (this.cafe) {
-            const msg = "⚠️ Une dosette est déjà présente";
-            this.afficherMessage(msg);
-            return msg;
-        }
+    this.mettreAJourAffichage();
+  }
 
-        this.cafe = true;
-        const msg = "✅ Dosette insérée";
-        this.afficherMessage(msg);
-        this.mettreAJourAffichage();
-        return msg;
+  insererPiece(montant) {
+    this.solde += montant;
+    const msg = `💰 ${montant.toFixed(2)}€ inséré. Solde : ${this.solde.toFixed(2)}€`;
+    this.afficherMessage(msg);
+    this.mettreAJourAffichage();
+  }
+
+  faireDuCafe() {
+    // Vérifications
+    if (!this.enFonction) {
+      this.afficherMessage("⚠️ La machine est éteinte. Allumez-la d'abord.");
+      return;
     }
 
-    ajouterSucre(nb) {
-        if (nb > 0) {
-            this.sucre += nb;
-            const msg = `🧂 +${nb} sucre(s)`;
-            this.afficherMessage(msg);
-        } else if (nb < 0 && this.sucre > 0) {
-            // On ne peut pas retirer plus que ce qu'on a
-            const retrait = Math.min(Math.abs(nb), this.sucre);
-            this.sucre -= retrait;
-            const msg = `🧂 -${retrait} sucre(s)`;
-            this.afficherMessage(msg);
-        } else if (nb < 0 && this.sucre <= 0) {
-            this.afficherMessage("⚠️ Aucun sucre à retirer");
-        }
-
-        this.mettreAJourAffichage();
+    if (!this.cafe) {
+      this.afficherMessage("⚠️ Ajoutez une dosette d'abord.");
+      return;
     }
 
-    insererPiece(montant) {
-        this.solde += montant;
-        const msg = `💰 ${montant.toFixed(2)}€ inséré. Solde : ${this.solde.toFixed(2)}€`;
-        this.afficherMessage(msg);
-        this.mettreAJourAffichage();
+    if (this.solde < this.prixCafe) {
+      const manque = (this.prixCafe - this.solde).toFixed(2);
+      this.afficherMessage(`⚠️ Insuffisant. Il manque ${manque}€`);
+      return;
     }
 
-    faireDuCafe() {
-        // Vérifications
-        if (!this.enFonction) {
-            this.afficherMessage("⚠️ La machine est éteinte. Allumez-la d'abord.");
-            return;
-        }
+    // ✅ Tout est bon, on prépare le café !
+    const monnaie = this.solde - this.prixCafe;
+    this.solde = 0;
+    this.cafe = false;
 
-        if (!this.cafe) {
-            this.afficherMessage("⚠️ Ajoutez une dosette d'abord.");
-            return;
-        }
+    // Animation de la tasse
+    this.animerCafe();
 
-        if (this.solde < this.prixCafe) {
-            const manque = (this.prixCafe - this.solde).toFixed(2);
-            this.afficherMessage(`⚠️ Insuffisant. Il manque ${manque}€`);
-            return;
-        }
-
-        // ✅ Tout est bon, on prépare le café !
-        const monnaie = this.solde - this.prixCafe;
-        this.solde = 0;
-        this.cafe = false;
-
-        // Animation de la tasse
-        this.animerCafe();
-
-        // Message de succès
-        let message = "☕ Café en préparation...";
-        if (this.sucre > 0) {
-            message += ` (${this.sucre} sucre(s))`;
-        }
-
-        this.afficherMessage(message);
-        this.mettreAJourAffichage();
-
-        // Après 2 secondes, on finalise
-        setTimeout(() => {
-            let finalMsg = "☕ Votre café est prêt ! Bonne dégustation !";
-            if (monnaie > 0) {
-                finalMsg += ` 🪙 Monnaie : ${monnaie.toFixed(2)}€`;
-            }
-            this.afficherMessage(finalMsg);
-            this.sucre = 0;
-            this.mettreAJourAffichage();
-        }, 2000);
+    // Message de succès
+    let message = "☕ Café en préparation...";
+    if (this.sucre > 0) {
+      message += ` (${this.sucre} sucre(s))`;
     }
 
-    // ============ AFFICHAGE ============
+    this.afficherMessage(message);
+    this.mettreAJourAffichage();
 
-    afficherMessage(texte) {
-        document.getElementById("message").textContent = texte;
+    // Après 2 secondes, on finalise
+    setTimeout(() => {
+      let finalMsg = "☕ Votre café est prêt ! Bonne dégustation !";
+      if (monnaie > 0) {
+        finalMsg += ` 🪙 Monnaie : ${monnaie.toFixed(2)}€`;
+      }
+      this.afficherMessage(finalMsg);
+      this.sucre = 0;
+      this.mettreAJourAffichage();
+    }, 2000);
+  }
+
+  // ============ AFFICHAGE ============
+
+  afficherMessage(texte) {
+    document.getElementById("message").textContent = texte;
+  }
+
+  mettreAJourAffichage() {
+    // LED allumage
+    const powerLed = document.getElementById("led-power");
+    if (this.enFonction) {
+      powerLed.classList.add("active");
+    } else {
+      powerLed.classList.remove("active");
     }
 
-    mettreAJourAffichage() {
-        // LED allumage
-        const powerLed = document.getElementById("led-power");
-        if (this.enFonction) {
-            powerLed.classList.add("active");
-        } else {
-            powerLed.classList.remove("active");
-        }
-
-        // LED dosette
-        const dosetteLed = document.getElementById("dosette-led");
-        if (this.cafe) {
-            dosetteLed.classList.add("active");
-        } else {
-            dosetteLed.classList.remove("active");
-        }
-
-        // Texte dosette
-        const dosetteStatut = document.getElementById("dosette-statut");
-        // optionnel: on peut laisser le texte statique
-
-        // Solde et sucre sur l'écran
-        document.getElementById("solde-ecran").textContent = this.solde.toFixed(2) + "€";
-        document.getElementById("sucre-ecran").textContent = this.sucre;
-
-        // Valeur sucre dans la molette
-        const sucreValeur = document.getElementById("sucre-valeur");
-        if (sucreValeur) {
-            sucreValeur.textContent = this.sucre;
-        }
-
-        // Affichage du sucre dans l'écran
-        const sucreEcran = document.getElementById("sucre-ecran");
-        if (sucreEcran) {
-            sucreEcran.textContent = this.sucre;
-        }
+    // LED dosette
+    const dosetteLed = document.getElementById("dosette-led");
+    if (this.cafe) {
+      dosetteLed.classList.add("active");
+    } else {
+      dosetteLed.classList.remove("active");
     }
 
-    animerCafe() {
-        // Goutte qui coule
-        const goutte = document.getElementById("goutte");
-        goutte.classList.add("active");
+    // Texte dosette
+    const dosetteStatut = document.getElementById("dosette-statut");
+    // optionnel: on peut laisser le texte statique
 
-        // Remplissage de la tasse
-        const tasse = document.getElementById("tasse-contenu");
-        tasse.classList.add("pleine");
+    // Solde et sucre sur l'écran
+    document.getElementById("solde-ecran").textContent =
+      this.solde.toFixed(2) + "€";
+    document.getElementById("sucre-ecran").textContent = this.sucre;
 
-        // Après 2 secondes, on arrête l'animation
-        setTimeout(() => {
-            goutte.classList.remove("active");
-        }, 2000);
-
-        // Après 3 secondes, on vide la tasse (prêt pour le prochain café)
-        setTimeout(() => {
-            tasse.classList.remove("pleine");
-        }, 4000);
+    // Valeur sucre dans la molette
+    const sucreValeur = document.getElementById("sucre-valeur");
+    if (sucreValeur) {
+      sucreValeur.textContent = this.sucre;
     }
 
-    // ============ RESET ============
-
-    reinitialiser() {
-        this.cafe = false;
-        this.enFonction = false;
-        this.sucre = 0;
-        this.solde = 0;
-
-        // Reset visuel
-        document.getElementById("goutte").classList.remove("active");
-        document.getElementById("tasse-contenu").classList.remove("pleine");
-
-        this.afficherMessage("🔄 Machine réinitialisée");
-        this.mettreAJourAffichage();
+    // Affichage du sucre dans l'écran
+    const sucreEcran = document.getElementById("sucre-ecran");
+    if (sucreEcran) {
+      sucreEcran.textContent = this.sucre;
     }
+  }
+
+  animerCafe() {
+    // Goutte qui coule
+    const goutte = document.getElementById("goutte");
+    goutte.classList.add("active");
+
+    // Remplissage de la tasse
+    const tasse = document.getElementById("tasse-contenu");
+    tasse.classList.add("pleine");
+
+    // 👇 AJOUTE ÇA : Activation de la fumée
+    const fumee = document.getElementById("fumee");
+    fumee.classList.add("active");
+
+    // Après 2 secondes, on arrête l'animation de la goutte
+    setTimeout(() => {
+      goutte.classList.remove("active");
+    }, 2000);
+
+    // Après 3 secondes, on vide la tasse
+    setTimeout(() => {
+      tasse.classList.remove("pleine");
+    }, 4000);
+
+    // 👇 AJOUTE ÇA : Après 5 secondes, la fumée disparaît
+    setTimeout(() => {
+      fumee.classList.remove("active");
+    }, 5000);
+  }
+  // ============ RESET ============
+
+  reinitialiser() {
+    this.cafe = false;
+    this.enFonction = false;
+    this.sucre = 0;
+    this.solde = 0;
+
+    // Reset visuel
+    document.getElementById("goutte").classList.remove("active");
+    document.getElementById("tasse-contenu").classList.remove("pleine");
+
+    this.afficherMessage("🔄 Machine réinitialisée");
+    this.mettreAJourAffichage();
+  }
 }
+
+const machine = new MachineACafe();
