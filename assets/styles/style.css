@@ -197,11 +197,16 @@ body {
 }
 
 .goutte {
-  width: 4px;
-  height: 0;
-  background: #6b3a2a;
-  border-radius: 50%;
-  transition: height 0.3s;
+    position: absolute;        /* ← Sort du flux */
+    top: 55px;                 /* ← Positionne sous la buse */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 0;
+    background: #6b3a2a;
+    border-radius: 50%;
+    transition: height 0.3s;
+    z-index: 5;
 }
 
 .goutte.active {
