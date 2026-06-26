@@ -11,49 +11,84 @@ $machine = new MachineACafe("Senseo");
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Machine à café</title>
+    <link rel="stylesheet" href="../assets/styles/style.css">
+    <script src="../assets/scripts/fonctionnement.js" defer></script>
 </head>
 
 <body>
-    <!-- Faire fonctionner la machine -->
-    <p><?= $machine->on_off() ?></p>
-    <button>Allumer</button>
-    <?php var_dump($machine); ?>
-    <p><?= $machine->on_off() ?></p>
-    <?php var_dump($machine); ?>
+    <div class="machine">
 
-    <!-- L'ajout d'une dosette -->
-    <p><?= $machine->mettreUneDosette() ?></p>
-    <?php var_dump($machine); ?>
-    <p><?= $machine->mettreUneDosette() ?></p>
-    <?php var_dump($machine); ?>
+        <!-- ÉCRAN LCD -->
+        <div class="ecran" id="ecran">
+            <div class="message" id="message">Prêt à servir</div>
+            <div class="infos-ecran">
+                💰 <span id="solde-ecran">0.00€</span>
+                &nbsp; 🧂 <span id="sucre-ecran">0</span>
+            </div>
+        </div>
 
-    <!-- Pour faire du café, il faut :-->
+        <!-- ZONE PAIEMENT - Fentes à pièces -->
+        <div class="zone-paiement">
+            <div class="fente" onclick="machine.insererPiece(0.50)">
+                <div class="fente-trou"></div>
+                <span>0.50€</span>
+            </div>
+            <div class="fente" onclick="machine.insererPiece(1.00)">
+                <div class="fente-trou"></div>
+                <span>1.00€</span>
+            </div>
+            <div class="fente" onclick="machine.insererPiece(2.00)">
+                <div class="fente-trou"></div>
+                <span>2.00€</span>
+            </div>
+        </div>
 
-    <!-- Allumer la machine -->
-    <p><?= $machine->on_off() ?></p>
-    <?php var_dump($machine); ?>
+        <!-- BOUTON DOSETTE -->
+        <div class="zone-dosette" onclick="machine.mettreUneDosette()">
+            <div class="dosette-led" id="dosette-led"></div>
+            <span>🫘 DOSETTE</span>
+        </div>
 
-    <!-- Ajouter une dosette -->
-    <p><?= $machine->mettreUneDosette() ?></p>
-    <?php var_dump($machine); ?>
+        <!-- MOLETTE SUCRE -->
+        <div class="zone-sucre">
+            <button class="btn-moins" onclick="machine.ajouterSucre(-1)">−</button>
+            <div class="sucre-valeur" id="sucre-valeur">0</div>
+            <button class="btn-plus" onclick="machine.ajouterSucre(1)">+</button>
+            <span>🧂</span>
+        </div>
 
-    <!-- Ajouter du sucre -->
-    <p><?= $machine->ajouterSucre(3) ?></p>
-    <?php var_dump($machine); ?>
+        <!-- ZONE TASSE (déjà placée !) -->
+        <div class="zone-tasse">
+            <div class="buse"></div>
+            <div class="goutte" id="goutte"></div>
+            <div class="tasse">
+                <div class="tasse-contenu" id="tasse-contenu"></div>
+                <div class="tasse-anse"></div>
+            </div>
+        </div>
 
-    <!-- Paiement du café -->
-    <p><?= $machine->insererPiece(2) ?></p>
+        <!-- BOUTONS PRINCIPAUX -->
+        <div class="boutons-principaux">
+            <button class="btn-power" onclick="machine.onOff()">
+                <div class="led-power" id="led-power"></div>
+                <span>🔌</span>
+                <small>Allumer</small>
+            </button>
 
-    <!-- Lancer la machine pour faire le café -->
-    <p><?= $machine->faireDuCafe() ?></p>
-    <?php var_dump($machine); ?>
-    
+            <button class="btn-brew" onclick="machine.faireDuCafe()">
+                <span>☕</span>
+                <small>Café</small>
+            </button>
+        </div>
+
+    </div>
+
 </body>
 
 </html>
