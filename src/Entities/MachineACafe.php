@@ -4,12 +4,34 @@ class MachineACafe
     private string $marque;
     private bool $cafe;
     private bool $enFonction;
+    private int $sucre;
+    private float $solde;
+    private float $prixCafe;
 
     public function __construct(string $marque = "Senseo")
     {
         $this->marque = $marque;
         $this->cafe = false;
         $this->enFonction = false;
+        $this->sucre = 0;
+        $this->solde = 0;
+        $this->prixCafe = 1.50;
+    }
+
+    // Getters & Setters
+    public function getCafe(): bool
+    {
+        return $this->cafe;
+    }
+
+    public function getMarque(): string
+    {
+        return $this->marque;
+    }
+
+    public function getEnFonction(): bool
+    {
+        return $this->enFonction;
     }
 
     /**
@@ -17,15 +39,6 @@ class MachineACafe
      */
     public function on_off(): string
     {
-        // if (!$this->enFonction) {
-
-        //     $this->enFonction = true;
-        //     return "La machine $this->marque est allumée";
-        // } else {
-        //     $this->enFonction = false;
-        //     return "La machine $this->marque est éteinte";
-        // }
-
         $this->enFonction = !$this->enFonction;
 
         return "La machine $this->marque est " . ($this->enFonction ? 'allumée' : 'éteinte');
@@ -70,13 +83,22 @@ class MachineACafe
         $this->cafe = false;
 
         // Phrase à afficher
-        $message = "Le café est prêt avec " . " sucre(s)☕ " ;
+        $message = "Le café est prêt avec " . $this->sucre . " sucre(s)☕ " ;
 
 
         return $message;
     }
 
     
+    /**
+     * Insertion de la pièce
+     */
+    public function insererPiece(float $montant): string
+    {
+        $this->solde += $montant;
+
+        return "Vous avez inséré {$montant} €. Solde : {$this->solde} €";
+    }
 
 
     /**
@@ -88,6 +110,7 @@ class MachineACafe
             'marque'      => $this->marque,
             'enFonction'  => $this->enFonction,
             'cafe'        => $this->cafe,
+            'prixCafe'    => $this->prixCafe,
         ];
     }
 }

@@ -5,10 +5,6 @@ header('Content-Type: application/json');
 
 session_start();
 
-// Créer la machine si elle n'existe pas
-if (!isset($_SESSION['machine'])) {
-    $_SESSION['machine'] = new MachineACafe("Senseo");
-}
 
 $machine = $_SESSION['machine'];
 $action = $_GET['action'] ?? '';
