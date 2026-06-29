@@ -15,18 +15,12 @@ const machine = {
 
     onOff() { this.appelerAPI('on_off'); },
     mettreUneDosette() { this.appelerAPI('dosette'); },
-    ajouterSucre(nb) { this.appelerAPI('sucre', { nb }); },
-    insererPiece(montant) { this.appelerAPI('piece', { montant }); },
     faireDuCafe() { this.appelerAPI('cafe'); },
 
     mettreAJourAffichage(donnees) {
         const m = donnees.machine;
 
-        // Message
-        document.getElementById("message-bar").textContent = donnees.message;
-
-        // Sucre
-        document.getElementById("sucre-valeur").textContent = m.sucre;
+        
 
         // LED dosette (rouge → vert)
         const ledDosette = document.getElementById("led-dosette");
@@ -48,7 +42,7 @@ const machine = {
         }
 
         // Animation café
-        if (donnees.message.includes("prêt") || donnees.message.includes("Monnaie") || donnees.message.includes("dégustation")) {
+        if (donnees.message.includes("prêt") || donnees.message.includes("dégustation")) {
             this.animerCafe();
         }
     },

@@ -4,18 +4,12 @@ class MachineACafe
     private string $marque;
     private bool $cafe;
     private bool $enFonction;
-    private int $sucre;
-    private float $solde;
-    private float $prixCafe;
 
     public function __construct(string $marque = "Senseo")
     {
         $this->marque = $marque;
         $this->cafe = false;
         $this->enFonction = false;
-        $this->sucre = 0;
-        $this->solde = 0;
-        $this->prixCafe = 1.50;
     }
 
     /**
@@ -71,64 +65,18 @@ class MachineACafe
 
         // Paiement du café
 
-        if ($this->solde < $this->prixCafe) {
-            return "Le montant est insuffisant";
-        }
-
-        $monnaie = $this->solde - $this->prixCafe;
-
-        $this->solde = 0;
-
-
         // Préparation du café avec ou sans sucre
 
         $this->cafe = false;
 
         // Phrase à afficher
-        $message = "Le café est prêt avec " . $this->sucre . " sucre(s)☕ " . "Monnaie rendue : " . "{$monnaie} €";
+        $message = "Le café est prêt avec " . " sucre(s)☕ " ;
 
-        $this->sucre = 0;
 
         return $message;
     }
 
-    /**
-     * Fonction d'ajout du sucre
-     */
-    public function ajouterSucre(int $quantite = 0): string
-    {
-        // Calcul du nouveau total
-        $nouveauSucre = $this->sucre + $quantite;
-
-        // Vérifier les limites
-        if ($nouveauSucre < 0) {
-            return "Vous ne pouvez pas retirer plus de {$this->sucre} sucre(s).";
-        }
-        if ($nouveauSucre > 5) {
-            return "Maximum 5 sucres atteint.";
-        }
-
-        // Ajouter (ou retirer) le sucre
-        $this->sucre += $quantite;
-
-        if ($quantite > 0) {
-            return "+{$quantite} sucre(s). Total : {$this->sucre}";
-        } elseif ($quantite < 0) {
-            $retrait = abs($quantite);
-            return "-{$retrait} sucre(s). Total : {$this->sucre}";
-        } else {
-            return "Aucun changement. Sucre : {$this->sucre}";
-        }
-    }
-    /**
-     * Insertion de la pièce
-     */
-    public function insererPiece(float $montant): string
-    {
-        $this->solde += $montant;
-
-        return "Vous avez inséré {$montant} €. Solde : {$this->solde} €";
-    }
+    
 
 
     /**
@@ -140,9 +88,6 @@ class MachineACafe
             'marque'      => $this->marque,
             'enFonction'  => $this->enFonction,
             'cafe'        => $this->cafe,
-            'sucre'       => $this->sucre,
-            'solde'       => $this->solde,
-            'prixCafe'    => $this->prixCafe,
         ];
     }
 }

@@ -128,48 +128,6 @@ body {
     padding: 15px 20px 18px;
 }
 
-/* ===== SUCRE ===== */
-.zone-sucre {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 12px;
-    padding: 6px 12px;
-    background: #e8e0d5;
-    border-radius: 25px;
-}
-
-.btn-sucre {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    border: none;
-    background: #d4c8b8;
-    color: #6b5a4a;
-    font-size: 1em;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.15s;
-}
-
-.btn-sucre:hover {
-    background: #c8b8a8;
-}
-
-.sucre-valeur {
-    color: #6b5a4a;
-    font-size: 1.1em;
-    font-weight: 600;
-    min-width: 22px;
-    text-align: center;
-}
-
-.sucre-icon {
-    font-size: 1em;
-}
 
 /* ===== ZONE INFUSION ===== */
 .zone-infusion {
@@ -206,13 +164,13 @@ body {
 }
 
 .goutte.active {
-    height: 14px;
-    animation: goutte-couler 0.4s infinite;
+    height: 54px;
+    animation: goutte-couler 1s infinite;
 }
 
 @keyframes goutte-couler {
     0% { height: 3px; opacity: 1; }
-    100% { height: 16px; opacity: 0.3; }
+    100% { height: 54px; opacity: 0.3; }
 }
 
 .tasse {
@@ -222,6 +180,7 @@ body {
     background: linear-gradient(145deg, #ffffff, #f0f0f0);
     border-radius: 0 0 10px 10px;
     border: 2px solid #ddd;
+    margin-top: 52px;
     margin-bottom: 3px;
     box-shadow: 0 3px 8px rgba(0,0,0,0.08);
 }
@@ -301,18 +260,7 @@ body {
     100% { transform: translateY(-18px) scale(1.4); opacity: 0; }
 }
 
-/* ===== MESSAGE ===== */
-.message-bar {
-    text-align: center;
-    color: #6b5a4a;
-    font-size: 0.85em;
-    font-weight: 500;
-    padding: 6px 10px;
-    margin-bottom: 10px;
-    background: #e8e0d5;
-    border-radius: 8px;
-    min-height: 22px;
-}
+
 
 /* ===== BOUTON ALLUMAGE (EN BAS) ===== */
 .btn-power {
