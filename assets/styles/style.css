@@ -11,13 +11,13 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #667761 0%, #8b9a7b 100%);
+  background-color: rgba(66, 49, 10, 0.653); 
   font-family: "Segoe UI", Arial, sans-serif;
 }
 
 /* ===== LE CORPS DE LA MACHINE ===== */
 .machine {
-  background: linear-gradient(180deg, #3d2b1f 0%, #2c1810 50%, #1a0f0a 100%);
+  background: linear-gradient(180deg, #dadada 0%, #dadada 50%, #dadada 100%);
   border-radius: 30px 30px 20px 20px;
   padding: 30px 25px 25px;
   width: 380px;
@@ -94,7 +94,7 @@ body {
 }
 
 .fente span {
-  color: #d4a574;
+  color: #000000;
   font-size: 0.8em;
   font-weight: bold;
 }
@@ -107,17 +107,17 @@ body {
   gap: 10px;
   padding: 12px;
   margin-bottom: 15px;
-  background: #4a3a2a;
+  background: #1d1d1d;
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s;
-  color: #d4a574;
+  color: #ebebeb;
   font-weight: bold;
   font-size: 0.9em;
 }
 
 .zone-dosette:hover {
-  background: #5a4a3a;
+  background: #3e2a17;
 }
 
 .dosette-led {
@@ -141,7 +141,7 @@ body {
   gap: 10px;
   margin-bottom: 20px;
   padding: 10px;
-  background: #3d2b1f;
+  background: #1d1d1d;
   border-radius: 25px;
 }
 
@@ -152,7 +152,7 @@ body {
   border-radius: 50%;
   border: 2px solid #5a4a3a;
   background: #4a3a2a;
-  color: #d4a574;
+  color: #ebebeb;
   font-size: 1.3em;
   cursor: pointer;
   display: flex;
@@ -163,11 +163,11 @@ body {
 
 .btn-moins:hover,
 .btn-plus:hover {
-  background: #5a4a3a;
+  background: #3e2a17;
 }
 
 .sucre-valeur {
-  color: #d4a574;
+  color: #ebebeb;
   font-size: 1.5em;
   font-weight: bold;
   min-width: 30px;
@@ -183,7 +183,7 @@ body {
   align-items: center;
   margin-bottom: 20px;
   padding: 20px 0 10px;
-  background: #3d2b1f;
+  background: #41372f;
   border-radius: 15px;
   min-height: 200px;
 }
@@ -191,7 +191,7 @@ body {
 .buse {
   width: 20px;
   height: 30px;
-  background: #5a4a3a;
+  background: #acacac;
   border-radius: 0 0 5px 5px;
   margin-bottom: 5px;
 }
@@ -225,7 +225,7 @@ body {
   }
 }
 
-/* 👇 NOUVEAU : Le support/égouttoir */
+/* Le support/égouttoir */
 .support-tasse {
   display: flex;
   flex-direction: column;
@@ -236,10 +236,10 @@ body {
 .grille-support {
   width: 100px;
   height: 8px;
-  background: #5a4a3a;
+  background: #acacac;
   border-radius: 3px;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-  border: 1px solid #7a6a5a;
+  border: 1px solid #acacac;
   /* Petits trous façon grille */
   background-image: radial-gradient(circle, #3d2b1f 2px, transparent 2px);
   background-size: 10px 10px;
@@ -248,7 +248,7 @@ body {
 .pied-support {
   width: 90px;
   height: 6px;
-  background: #4a3a2a;
+  background: #616161;
   border-radius: 0 0 5px 5px;
 }
 
@@ -319,13 +319,13 @@ body {
 
 /* Bouton Allumer */
 .btn-power {
-  background: linear-gradient(180deg, #4a4a4a, #2a2a2a);
+  background: linear-gradient(180deg, #acacac, #2a2a2a);
   color: #aaa;
   box-shadow: 0 4px 0 #1a1a1a;
 }
 
 .btn-power:hover {
-  background: linear-gradient(180deg, #5a5a5a, #3a3a3a);
+  background: linear-gradient(180deg, #5a5a5a, #5a5a5a);
 }
 
 .btn-power small {

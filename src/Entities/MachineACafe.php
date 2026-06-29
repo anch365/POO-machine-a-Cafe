@@ -85,7 +85,7 @@ class MachineACafe
         $this->cafe = false;
 
         // Phrase à afficher
-        $message = "Le café est prêt avec " . $this->sucre . " sucre(s) ☕" . "<br> Monnaie rendue : " . "{$monnaie} €";
+        $message = "Le café est prêt avec " . $this->sucre . " sucre(s) ☕" .  "Monnaie rendue : " . "{$monnaie} €";
 
         $this->sucre = 0;
 
@@ -101,7 +101,7 @@ class MachineACafe
             return "Maximum 5 sucres.";
         }
 
-        $this->sucre = $quantite;
+        $this->sucre += $quantite;
 
         return "$quantite sucre(s) ajouté(s).";
     }
@@ -115,4 +115,20 @@ class MachineACafe
 
         return "Vous avez inséré {$montant} €. Solde : {$this->solde} €";
     }
+
+
+    /**
+ * Retourne l'état complet de la machine (pour l'API JSON)
+ */
+public function getEtat(): array
+{
+    return [
+        'marque'      => $this->marque,
+        'enFonction'  => $this->enFonction,
+        'cafe'        => $this->cafe,
+        'sucre'       => $this->sucre,
+        'solde'       => $this->solde,
+        'prixCafe'    => $this->prixCafe,
+    ];
+}
 }
