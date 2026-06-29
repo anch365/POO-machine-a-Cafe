@@ -6,58 +6,49 @@ const machine = {
             const reponse = await fetch(`../public/api.php?${query}`);
             const donnees = await reponse.json();
             this.mettreAJourAffichage(donnees);
-            console.log("✅ API réponse :", donnees); // ← Pour voir dans la console !
+            console.log("✅ API :", donnees);
             return donnees;
         } catch (erreur) {
             console.error("❌ Erreur API :", erreur);
         }
     },
 
-    // =========== MÉTHODES ===========
-
-    onOff() {
-        this.appelerAPI('on_off');
-    },
-
-    mettreUneDosette() {
-        this.appelerAPI('dosette');
-    },
-
-    ajouterSucre(nb) {
-        this.appelerAPI('sucre', { nb });
-    },
-
-    insererPiece(montant) {
-        this.appelerAPI('piece', { montant });
-    },
-
-    faireDuCafe() {
-        this.appelerAPI('cafe');
-    },
-
-    // =========== AFFICHAGE ===========
+    onOff() { this.appelerAPI('on_off'); },
+    mettreUneDosette() { this.appelerAPI('dosette'); },
+    ajouterSucre(nb) { this.appelerAPI('sucre', { nb }); },
+    insererPiece(montant) { this.appelerAPI('piece', { montant }); },
+    faireDuCafe() { this.appelerAPI('cafe'); },
 
     mettreAJourAffichage(donnees) {
-        // Message sur l'écran
-        document.getElementById("message").textContent = donnees.message;
-
         const m = donnees.machine;
 
-        // Solde et sucre
-        document.getElementById("solde-ecran").textContent = m.solde.toFixed(2) + "€";
-        document.getElementById("sucre-ecran").textContent = m.sucre;
+        // Message
+        document.getElementById("message-bar").textContent = donnees.message;
+
+        // Sucre
         document.getElementById("sucre-valeur").textContent = m.sucre;
 
-        // LED allumage
-        const powerLed = document.getElementById("led-power");
-        powerLed.classList.toggle("active", m.enFonction);
+        // LED dosette (rouge → vert)
+        const ledDosette = document.getElementById("led-dosette");
+        ledDosette.classList.toggle("active", m.cafe);
 
-        // LED dosette
-        const dosetteLed = document.getElementById("dosette-led");
-        dosetteLed.classList.toggle("active", m.cafe);
+        // Bouton allumage (rouge → vert)
+        const btnPower = document.getElementById("btn-power");
+        const ledPower = document.getElementById("led-power");
+        const labelPower = document.getElementById("power-label");
 
-        // Animation si le café a été préparé
-        if (donnees.message.includes("prêt") || donnees.message.includes("Monnaie")) {
+        if (m.enFonction) {
+            btnPower.classList.add("allume");
+            ledPower.classList.add("allume");
+            labelPower.textContent = "ALLUMÉ";
+        } else {
+            btnPower.classList.remove("allume");
+            ledPower.classList.remove("allume");
+            labelPower.textContent = "ALLUMER";
+        }
+
+        // Animation café
+        if (donnees.message.includes("prêt") || donnees.message.includes("Monnaie") || donnees.message.includes("dégustation")) {
             this.animerCafe();
         }
     },
@@ -67,12 +58,17 @@ const machine = {
         const tasse = document.getElementById("tasse-contenu");
         const fumee = document.getElementById("fumee");
 
-        goutte.classList.add("active");
-        tasse.classList.add("pleine");
-        fumee.classList.add("active");
-
-        setTimeout(() => goutte.classList.remove("active"), 2000);
-        setTimeout(() => tasse.classList.remove("pleine"), 4000);
-        setTimeout(() => fumee.classList.remove("active"), 5000);
+        if (goutte) {
+            goutte.classList.add("active");
+            setTimeout(() => goutte.classList.remove("active"), 2000);
+        }
+        if (tasse) {
+            tasse.classList.add("pleine");
+            setTimeout(() => tasse.classList.remove("pleine"), 4000);
+        }
+        if (fumee) {
+            fumee.classList.add("active");
+            setTimeout(() => fumee.classList.remove("active"), 5000);
+        }
     }
 };

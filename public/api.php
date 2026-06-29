@@ -41,10 +41,8 @@ switch ($action) {
         $message = "Action inconnue";
 }
 
-// Sauvegarder la machine
 $_SESSION['machine'] = $machine;
 
-// Tout renvoyer en JSON
 echo json_encode([
     'message' => $message,
     'machine' => $machine->getEtat()

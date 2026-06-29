@@ -58,7 +58,7 @@ class MachineACafe
     public function faireDuCafe(): string
     {
         // Allumer la machine
-        
+
         if (!$this->enFonction) {
             return "La machine est éteinte.";
         }
@@ -85,7 +85,7 @@ class MachineACafe
         $this->cafe = false;
 
         // Phrase à afficher
-        $message = "Le café est prêt avec " . $this->sucre . " sucre(s) ☕" .  "Monnaie rendue : " . "{$monnaie} €";
+        $message = "Le café est prêt avec " . $this->sucre . " sucre(s)☕ " . "Monnaie rendue : " . "{$monnaie} €";
 
         $this->sucre = 0;
 
@@ -97,15 +97,29 @@ class MachineACafe
      */
     public function ajouterSucre(int $quantite = 0): string
     {
-        if ($quantite < 0 || $quantite > 5) {
-            return "Maximum 5 sucres.";
+        // Calcul du nouveau total
+        $nouveauSucre = $this->sucre + $quantite;
+
+        // Vérifier les limites
+        if ($nouveauSucre < 0) {
+            return "Vous ne pouvez pas retirer plus de {$this->sucre} sucre(s).";
+        }
+        if ($nouveauSucre > 5) {
+            return "Maximum 5 sucres atteint.";
         }
 
+        // Ajouter (ou retirer) le sucre
         $this->sucre += $quantite;
 
-        return "$quantite sucre(s) ajouté(s).";
+        if ($quantite > 0) {
+            return "+{$quantite} sucre(s). Total : {$this->sucre}";
+        } elseif ($quantite < 0) {
+            $retrait = abs($quantite);
+            return "-{$retrait} sucre(s). Total : {$this->sucre}";
+        } else {
+            return "Aucun changement. Sucre : {$this->sucre}";
+        }
     }
-
     /**
      * Insertion de la pièce
      */
@@ -118,17 +132,17 @@ class MachineACafe
 
 
     /**
- * Retourne l'état complet de la machine (pour l'API JSON)
- */
-public function getEtat(): array
-{
-    return [
-        'marque'      => $this->marque,
-        'enFonction'  => $this->enFonction,
-        'cafe'        => $this->cafe,
-        'sucre'       => $this->sucre,
-        'solde'       => $this->solde,
-        'prixCafe'    => $this->prixCafe,
-    ];
-}
+     * Retourne l'état complet de la machine (pour l'API JSON)
+     */
+    public function getEtat(): array
+    {
+        return [
+            'marque'      => $this->marque,
+            'enFonction'  => $this->enFonction,
+            'cafe'        => $this->cafe,
+            'sucre'       => $this->sucre,
+            'solde'       => $this->solde,
+            'prixCafe'    => $this->prixCafe,
+        ];
+    }
 }

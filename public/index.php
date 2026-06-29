@@ -1,110 +1,75 @@
-<?php
-require_once "../utils/autoloader.php";
-
-$machine = new MachineACafe("Senseo");
-// var_dump($machine);
-// $machine->mettreUneDosette();
-// var_dump($machine);
-// $machine->faireDuCafe();
-// var_dump($machine);
-
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Machine à café</title>
+    <title>Senseo - Machine à Café</title>
     <link rel="stylesheet" href="../assets/styles/style.css">
-    <script src="../assets/scripts/fonctionnement.js" defer></script>
 </head>
-
 <body>
-    <div class="machine">
 
-        <!-- ÉCRAN LCD -->
-        <div class="ecran" id="ecran">
-            <div class="message" id="message">Prêt à servir</div>
-            <div class="infos-ecran">
-                💰 <span id="solde-ecran">0.00€</span>
-                &nbsp; 🧂 <span id="sucre-ecran">0</span>
-            </div>
+<div class="machine">
+
+    <!-- TÊTE / CAPOT (boutons du haut) -->
+    <div class="tete">
+        <div class="marque">☕ senseo</div>
+        <div class="tete-boutons">
+
+            <!-- Bouton DOSETTE -->
+            <button class="btn-rond" id="btn-dosette" onclick="machine.mettreUneDosette()">
+                <span class="btn-icon">🫘</span>
+                <span class="btn-label">Dosette</span>
+                <span class="btn-led" id="led-dosette"></span>
+            </button>
+
+            <!-- Bouton CAFÉ -->
+            <button class="btn-rond btn-cafe" onclick="machine.faireDuCafe()">
+                <span class="btn-icon">☕</span>
+                <span class="btn-label">Café</span>
+            </button>
+
         </div>
+    </div>
 
-        <!-- ZONE PAIEMENT - Fentes à pièces -->
-        <div class="zone-paiement">
-            <div class="fente" onclick="machine.insererPiece(0.50)">
-                <div class="fente-trou"></div>
-                <span>0.50€</span>
-            </div>
-            <div class="fente" onclick="machine.insererPiece(1.00)">
-                <div class="fente-trou"></div>
-                <span>1.00€</span>
-            </div>
-            <div class="fente" onclick="machine.insererPiece(2.00)">
-                <div class="fente-trou"></div>
-                <span>2.00€</span>
-            </div>
-        </div>
+    <!-- CORPS -->
+    <div class="corps">
 
-        <!-- BOUTON DOSETTE -->
-        <div class="zone-dosette" onclick="machine.mettreUneDosette()">
-            <div class="dosette-led" id="dosette-led"></div>
-            <span>🫘 DOSETTE</span>
-        </div>
-
-        <!-- MOLETTE SUCRE -->
+        <!-- SUCRE -->
         <div class="zone-sucre">
-            <button class="btn-moins" onclick="machine.ajouterSucre(-1)">−</button>
+            <button class="btn-sucre" onclick="machine.ajouterSucre(-1)">−</button>
             <div class="sucre-valeur" id="sucre-valeur">0</div>
-            <button class="btn-plus" onclick="machine.ajouterSucre(1)">+</button>
-            <span>🧂</span>
+            <button class="btn-sucre" onclick="machine.ajouterSucre(1)">+</button>
+            <span class="sucre-icon">🧂</span>
         </div>
 
-<!-- ZONE TASSE AVEC SUPPORT -->
-<div class="zone-tasse">
-    <div class="buse"></div>
-    <div class="goutte" id="goutte"></div>
-    
-    <!-- Support + tasse -->
-    <div class="support-tasse">
-
-        <!-- La tasse -->
-        <div class="tasse">
-            <div class="tasse-contenu" id="tasse-contenu"></div>
-            <div class="fumee" id="fumee">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
+        <!-- ZONE INFUSION -->
+        <div class="zone-infusion">
+            <div class="buse"></div>
+            <div class="goutte" id="goutte"></div>
+            <div class="tasse">
+                <div class="tasse-contenu" id="tasse-contenu"></div>
+                <div class="fumee" id="fumee">
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <div class="tasse-anse"></div>
             </div>
-            <div class="tasse-anse"></div>
+            <div class="grille"></div>
         </div>
-        
-        <!-- Grille d'égouttoir -->
-        <div class="grille-support"></div>
-        <div class="pied-support"></div>
+
+        <!-- MESSAGE -->
+        <div class="message-bar" id="message-bar">Prêt à servir</div>
+
+        <!-- BOUTON ALLUMAGE (en bas) -->
+        <button class="btn-power" id="btn-power" onclick="machine.onOff()">
+            <span class="power-led" id="led-power"></span>
+            <span class="power-icon">🔌</span>
+            <span class="power-label" id="power-label">ALLUMER</span>
+        </button>
+
     </div>
+
 </div>
-        <!-- BOUTONS PRINCIPAUX -->
-        <div class="boutons-principaux">
-            <button class="btn-power" onclick="machine.onOff()">
-                <div class="led-power" id="led-power"></div>
-                <span>🔌</span>
-                <small>Allumer</small>
-            </button>
 
-            <button class="btn-brew" onclick="machine.faireDuCafe()">
-                <span>☕</span>
-                <small>Café</small>
-            </button>
-        </div>
-
-    </div>
-
+<script src="../assets/scripts/fonctionnement.js"></script>
 </body>
-
 </html>
